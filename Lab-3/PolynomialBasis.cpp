@@ -2,7 +2,7 @@
 
 fieldElement::fieldElement()
 {
-	bitString = "0";
+	bitString = "1";
 
 	size = 1;
 
@@ -185,7 +185,7 @@ std::shared_ptr<fieldElement> PolDiv(std::shared_ptr<fieldElement> firstElement,
 	return remainder;
 }
 
-std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> secondElement, std::shared_ptr<fieldElement> generator)
+std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> secondElement, std::shared_ptr<fieldElement> generator, bool text)
 {
 	auto numberA = ZeroEraser(firstElement);
 
@@ -213,15 +213,18 @@ std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement,
 
 	numberC->bitString = "";
 
-	for (int i = 0; i < numberC->size; i++)
+	if (text)
 	{
-		numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+		for (int i = 0; i < numberC->size; i++)
+		{
+			numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+		}
 	}
 
 	return numberC;
 }
 
-std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> generator)
+std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> generator, bool text)
 {
 	auto numberC = std::make_shared<fieldElement>(firstElement->size * 2 - 1);
 	std::fill(&numberC->value[0], &numberC->value[numberC->size], 0);
@@ -232,6 +235,36 @@ std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstEleme
 	}
 
 	numberC = PolDiv(numberC, generator);
+
+	numberC->bitString = "";
+
+	if (text)
+	{
+		for (int i = 0; i < numberC->size; i++)
+		{
+			numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+		}
+	}
+
+	return numberC;
+}
+
+std::shared_ptr<fieldElement> PolPow(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElement> numberB, std::shared_ptr<fieldElement> generator)
+{
+	auto numberC = std::make_shared<fieldElement>();
+
+	for (long long i = 0; i < numberB->size; i++)
+	{
+		if (numberB->value[i] == 1)
+		{
+			numberC = PolMul(numberC, numberA, generator, false);
+		}
+
+		if (i != numberB->size - 1)
+		{
+			numberC = PolSquare(numberC, generator, false);
+		}
+	}
 
 	numberC->bitString = "";
 
