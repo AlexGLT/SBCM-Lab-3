@@ -275,3 +275,22 @@ std::shared_ptr<fieldElement> PolPow(std::shared_ptr<fieldElement> numberA, std:
 
 	return numberC;
 }
+
+std::shared_ptr<fieldElement> PolInv(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElement> generator)
+{
+	std::string pow;
+
+	for (int i = 0; i < 191; i ++)
+	{
+		if (i == 190)
+		{
+			pow += "0";
+		}
+		else
+		{
+			pow += "1";
+		}
+	}
+
+	return PolPow(numberA, std::make_shared<fieldElement>(pow), generator);
+}

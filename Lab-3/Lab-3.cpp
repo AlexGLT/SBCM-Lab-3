@@ -39,4 +39,8 @@ int main()
 	std::cout << "Result of pow: ";
 	auto pow = PolPow(numberA, numberС, generator);
 	std::cout << pow->bitString << std::endl;
+
+	std::cout << "Inverse element of numberA: ";
+	auto inv = PolInv(numberA, generator);
+	std::cout << inv->bitString << std::endl;
 }
