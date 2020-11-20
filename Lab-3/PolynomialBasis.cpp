@@ -106,7 +106,7 @@ bool LongComp(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElemen
 
 	for (long long i = 0; i < numberA->size; i++)
 	{
-		if (numberA->value[i] > numberB->value[i])
+		if (numberA->value[i] >= numberB->value[i])
 		{
 			return true;
 		}
@@ -179,6 +179,22 @@ std::shared_ptr<fieldElement> PolDiv(std::shared_ptr<fieldElement> firstElement,
 
 		remainder = ZeroEraser(remainder);
 	}
+
+// 	for (int i = 0; i < divisor->size; i++)
+// 	{
+// 		if (remainder->value[i] == divisor->value[i])
+// 		{
+// 			continue;
+// 		}
+// 		else if (i == divisor->size - 1)
+// 		{
+// 			remainder = PolAdd(remainder, divisor);
+// 		}
+// 		else
+// 		{
+// 			break;
+// 		}
+// 	}
 
 	FieldStandart(remainder);
 

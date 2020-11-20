@@ -47,4 +47,26 @@ int main()
 	std::cout << "Trace of numberA: ";
 	auto trace = PolTr(numberA, generator);
 	std::cout << trace << std::endl;
+
+	std::cout << "-------TESTS------" << std::endl;
+
+	std::cout << "1. Distributivity" << std::endl;
+
+	std::cout << "1.1. (A + B) * C = ";
+	auto firstPropertie = PolMul(PolAdd(numberA, numberB), numberС, generator);
+	std::cout << firstPropertie->bitString << std::endl;
+
+	std::cout << "1.3. B * C + C * A = ";
+	auto thirdPropertie = PolAdd(PolMul(numberB, numberС, generator), PolMul(numberС, numberA, generator));
+	std::cout << thirdPropertie->bitString << std::endl;
+
+	std::cout << "2. Fermat's little theorem" << std::endl;
+	std::cout << "2.1. A^(2^191 - 1) = ";
+	auto one = std::make_shared<fieldElement>(191);
+	std::fill(&one->value[0], &one->value[191], 1);
+
+	auto fermatPow = PolPow(numberA, one, generator);
+	std::cout << fermatPow->bitString << std::endl;
+
+	return 0;
 }
