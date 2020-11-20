@@ -19,6 +19,12 @@ struct fieldElement
 
 void showBigInteger(std::shared_ptr<fieldElement> number, std::string numberName);
 
-void ZeroEraser(std::shared_ptr<fieldElement> number);
+std::shared_ptr<fieldElement> ZeroEraser(std::shared_ptr<fieldElement> number);
+
+void FieldStandart(std::shared_ptr<fieldElement> number);
 
 std::shared_ptr<fieldElement> PolAdd(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> secondElement);
+
+std::shared_ptr<fieldElement> PolDiv(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> secondElement);
+
+std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> secondElement, std::shared_ptr<fieldElement> generator);

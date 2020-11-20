@@ -23,4 +23,8 @@ int main()
 	std::cout << "Result of addition: ";
 	auto addition = PolAdd(numberA, numberB);
 	std::cout << addition->bitString << std::endl;
+
+	std::cout << "Result of multiplication: ";
+	auto multiplication = PolMul(numberA, numberB, generator);
+	std::cout << multiplication->bitString << std::endl;
 }
