@@ -215,6 +215,8 @@ std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement,
 
 	if (text)
 	{
+		numberC->bitString = "";
+
 		for (int i = 0; i < numberC->size; i++)
 		{
 			numberC->bitString += static_cast<char>(numberC->value[i] + 48);
@@ -240,6 +242,8 @@ std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstEleme
 
 	if (text)
 	{
+		numberC->bitString = "";
+
 		for (int i = 0; i < numberC->size; i++)
 		{
 			numberC->bitString += static_cast<char>(numberC->value[i] + 48);
@@ -249,7 +253,7 @@ std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstEleme
 	return numberC;
 }
 
-std::shared_ptr<fieldElement> PolPow(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElement> numberB, std::shared_ptr<fieldElement> generator)
+std::shared_ptr<fieldElement> PolPow(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElement> numberB, std::shared_ptr<fieldElement> generator, bool text)
 {
 	auto numberC = std::make_shared<fieldElement>();
 
@@ -266,11 +270,14 @@ std::shared_ptr<fieldElement> PolPow(std::shared_ptr<fieldElement> numberA, std:
 		}
 	}
 
-	numberC->bitString = "";
-
-	for (int i = 0; i < numberC->size; i++)
+	if (text)
 	{
-		numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+		numberC->bitString = "";
+	
+		for (int i = 0; i < numberC->size; i++)
+		{
+			numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+		}
 	}
 
 	return numberC;
@@ -293,4 +300,28 @@ std::shared_ptr<fieldElement> PolInv(std::shared_ptr<fieldElement> numberA, std:
 	}
 
 	return PolPow(numberA, std::make_shared<fieldElement>(pow), generator);
+}
+
+char PolTr(std::shared_ptr<fieldElement> numberA, std::shared_ptr<fieldElement> generator)
+{
+	auto traceC = numberA;
+	auto conjugateC = numberA;
+
+	for (int i = 0; i < 190; i++)
+	{
+		conjugateC = PolSquare(conjugateC, generator, false);
+
+		traceC = PolAdd(traceC, conjugateC);
+	}
+
+	if (traceC->value[190] == 0)
+	{
+		return '0';
+	}
+	else if (traceC->value[190] == 1)
+	{
+		return '1';
+	}
+
+	return 'F';
 }

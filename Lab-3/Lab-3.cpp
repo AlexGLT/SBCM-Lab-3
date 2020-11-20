@@ -43,4 +43,8 @@ int main()
 	std::cout << "Inverse element of numberA: ";
 	auto inv = PolInv(numberA, generator);
 	std::cout << inv->bitString << std::endl;
+
+	std::cout << "Trace of numberA: ";
+	auto trace = PolTr(numberA, generator);
+	std::cout << trace << std::endl;
 }
