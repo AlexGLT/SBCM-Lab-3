@@ -178,16 +178,9 @@ std::shared_ptr<fieldElement> PolDiv(std::shared_ptr<fieldElement> firstElement,
 		remainder = PolAdd(remainder, maxDivisor);
 
 		remainder = ZeroEraser(remainder);
-
 	}
 
 	FieldStandart(remainder);
-
-
-	for (int i = 0; i < 191; i++)
-	{
-		remainder->bitString += static_cast<char>(remainder->value[i] + 48);
-	}
 
 	return remainder;
 }
@@ -215,6 +208,28 @@ std::shared_ptr<fieldElement> PolMul(std::shared_ptr<fieldElement> firstElement,
 	}
 
 	numberC = ZeroEraser(numberC);
+
+	numberC = PolDiv(numberC, generator);
+
+	numberC->bitString = "";
+
+	for (int i = 0; i < numberC->size; i++)
+	{
+		numberC->bitString += static_cast<char>(numberC->value[i] + 48);
+	}
+
+	return numberC;
+}
+
+std::shared_ptr<fieldElement> PolSquare(std::shared_ptr<fieldElement> firstElement, std::shared_ptr<fieldElement> generator)
+{
+	auto numberC = std::make_shared<fieldElement>(firstElement->size * 2 - 1);
+	std::fill(&numberC->value[0], &numberC->value[numberC->size], 0);
+
+	for (int i = 0; i < firstElement->size; i++)
+	{
+		numberC->value[2 * i] = firstElement->value[i];
+	}
 
 	numberC = PolDiv(numberC, generator);
 

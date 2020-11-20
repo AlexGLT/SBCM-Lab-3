@@ -27,4 +27,8 @@ int main()
 	std::cout << "Result of multiplication: ";
 	auto multiplication = PolMul(numberA, numberB, generator);
 	std::cout << multiplication->bitString << std::endl;
+
+	std::cout << "Result of square: ";
+	auto square = PolSquare(numberA, generator);
+	std::cout << square->bitString << std::endl;
 }
